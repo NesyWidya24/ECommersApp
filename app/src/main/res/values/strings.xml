@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">ECommersApp</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="pass">Password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="noAccount">Not have account? Register</string>
+    <string name="register_user">Register User</string>
+    <string name="recover_pass">Recover Password</string>
+    <string name="recover">Recover</string>
+    <string name="full_name">Full Name</string>
+    <string name="phone">Phone</string>
+    <string name="country">Country</string>
+    <string name="state">State</string>
+    <string name="city">City</string>
+    <string name="complete_address">Complete Address</string>
+    <string name="confirm_pass">Confirm Password</string>
+    <string name="register_seller">Are you a seller? Register as Seller</string>
+    <string name="register">Register</string>
+    <string name="shopName">Shop Name</string>
+    <string name="deliveryFee">Delivery Fee</string>
 </resources>
