@@ -5,9 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -17,52 +17,54 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class SplashActivity extends AppCompatActivity {
+public class MainUserActivity extends AppCompatActivity {
+
+    private TextView nameTv;
+    private ImageButton logoutBtn;
 
     private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main_user);
 
-        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        nameTv = findViewById(R.id.nameTv);
+        logoutBtn = findViewById(R.id.logoutBtn);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        checkUser();
 
-        setContentView(R.layout.activity_splash);
-
-        new Handler().postDelayed(() -> {
-            FirebaseUser user = firebaseAuth.getCurrentUser();
-            if (user==null){
-                startActivity(new Intent(SplashActivity.this, LoginActivity.class));
-                finish();
-            }else {
-                checkUserType();
-            }
-        }, 1000);
+        logoutBtn.setOnClickListener(v -> {
+            firebaseAuth.signOut();
+            checkUser();
+        });
     }
 
-    private void checkUserType() {
+    private void checkUser() {
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if (user ==null){
+            startActivity(new Intent(MainUserActivity.this, LoginActivity.class));
+            finish();
+        }else {
+            loadMyInfo();
+        }
+    }
+
+    private void loadMyInfo() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
         reference.orderByChild("uid").equalTo(firebaseAuth.getUid())
-                .addListenerForSingleValueEvent(new ValueEventListener() {
+                .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for (DataSnapshot dataSnapshot: snapshot.getChildren()){
+                            String name = ""+dataSnapshot.child("name").getValue();
                             String accountType = ""+dataSnapshot.child("accountType").getValue();
-                            if (accountType.equals("Seller")){
-                                //user is seller
-                                startActivity(new Intent(SplashActivity.this, MainSellerActivity.class));
-                                finish();
-                            }else {
-                                //user is buyer
-                                startActivity(new Intent(SplashActivity.this, MainUserActivity.class));
-                                finish();
-                            }
+
+                            nameTv.setText(name+" ("+accountType+")");
                         }
                     }
+
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
 
