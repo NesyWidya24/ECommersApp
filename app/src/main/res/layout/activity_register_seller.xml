@@ -80,6 +80,7 @@
                 android:hint="@string/full_name"
                 android:inputType="textPersonName|textCapWords"
                 android:padding="10dp" />
+
             <EditText
                 android:id="@+id/shopNameEt"
                 android:layout_width="match_parent"
@@ -166,64 +167,87 @@
                     android:padding="10dp" />
             </LinearLayout>
 
-            <EditText
-                android:id="@+id/addressEt"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/EtLayoutAddress"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/addressLl"
-                android:layout_margin="5dp"
-                android:background="@drawable/shape_rect02"
-                android:drawableStart="@drawable/ic_location_gray"
-                android:drawablePadding="5dp"
-                android:hint="@string/complete_address"
-                android:inputType="textPostalAddress|textMultiLine"
-                android:padding="10dp" />
+                android:hint="@string/complete_address">
 
-            <EditText
-                android:id="@+id/emailEt"
+                <EditText
+                    android:id="@+id/addressEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/addressLl"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/shape_rect02"
+                    android:drawableStart="@drawable/ic_location_gray"
+                    android:drawablePadding="5dp"
+                    android:inputType="textPostalAddress|textMultiLine"
+                    android:padding="10dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/EtLayoutEmail"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/addressEt"
-                android:layout_margin="5dp"
-                android:background="@drawable/shape_rect02"
-                android:drawableStart="@drawable/ic_mail_gray"
-                android:drawablePadding="5dp"
-                android:hint="@string/email"
-                android:inputType="textEmailAddress"
-                android:padding="10dp" />
+                android:layout_below="@+id/EtLayoutAddress"
+                android:hint="@string/email">
 
-            <EditText
-                android:id="@+id/passEt"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/emailEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/addressEt"
+                    android:layout_margin="5dp"
+                    android:inputType="textEmailAddress"
+                    android:padding="10dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/EtLayoutPass"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/emailEt"
-                android:layout_margin="5dp"
-                android:background="@drawable/shape_rect02"
-                android:drawableStart="@drawable/ic_lock_gray"
-                android:drawablePadding="5dp"
+                android:layout_below="@+id/EtLayoutEmail"
                 android:hint="@string/pass"
-                android:inputType="textPassword"
-                android:padding="10dp" />
+                app:passwordToggleEnabled="true">
 
-            <EditText
-                android:id="@+id/cPassEt"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/passEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:inputType="textPassword"
+                    android:padding="10dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/EtLayoutCPass"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/passEt"
-                android:layout_margin="5dp"
-                android:background="@drawable/shape_rect02"
-                android:drawableStart="@drawable/ic_lock_gray"
-                android:drawablePadding="5dp"
+                android:layout_below="@+id/EtLayoutPass"
                 android:hint="@string/confirm_pass"
-                android:inputType="textPassword"
-                android:padding="10dp" />
+                app:passwordToggleEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/cPassEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:inputType="textPassword"
+                    android:padding="10dp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/registerBtn"
                 style="@style/TextAppearance.AppCompat.Widget.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/cPassEt"
+                android:layout_below="@id/EtLayoutCPass"
                 android:layout_centerHorizontal="true"
                 android:minWidth="120dp"
                 android:text="@string/register"

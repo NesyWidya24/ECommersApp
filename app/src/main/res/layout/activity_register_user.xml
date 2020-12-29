@@ -16,36 +16,37 @@
             android:id="@+id/backBtn"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/ic_back_white"
-            android:background="@null"/>
+            android:background="@null"
+            android:src="@drawable/ic_back_white" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:text="@string/register_user"
-            android:textStyle="bold"
+            android:textColor="@color/white"
             android:textSize="20sp"
-            android:textColor="@color/white"/>
+            android:textStyle="bold" />
+
         <ImageButton
             android:id="@+id/gpsBtn"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/ic_gps_white"
             android:layout_alignParentEnd="true"
-            android:background="@null"/>
+            android:background="@null"
+            android:src="@drawable/ic_gps_white" />
     </RelativeLayout>
 
     <ImageView
         android:id="@+id/key"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:background="@drawable/shape_circle01"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp"
-        android:src="@drawable/ic_key_white"
-        android:padding="5dp"
         android:layout_marginBottom="20dp"
-        android:layout_centerHorizontal="true"/>
+        android:background="@drawable/shape_circle01"
+        android:padding="5dp"
+        android:src="@drawable/ic_key_white" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -56,161 +57,180 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profileIv"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_centerHorizontal="true"
-        app:civ_border_color="@color/blue_700"
-        app:civ_border_width="1dp"
-        app:civ_border_overlay="true"
-        android:src="@drawable/ic_person_gray"/>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profileIv"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/ic_person_gray"
+                app:civ_border_color="@color/blue_700"
+                app:civ_border_overlay="true"
+                app:civ_border_width="1dp" />
 
-    <EditText
-        android:id="@+id/nameEt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/profileIv"
-        android:hint="@string/full_name"
-        android:padding="10dp"
-        android:drawableStart="@drawable/ic_person_gray"
-        android:drawablePadding="5dp"
-        android:layout_margin="5dp"
-        android:inputType="textPersonName|textCapWords"
-        android:background="@drawable/shape_rect02"/>
+            <EditText
+                android:id="@+id/nameEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/profileIv"
+                android:layout_margin="5dp"
+                android:background="@drawable/shape_rect02"
+                android:drawableStart="@drawable/ic_person_gray"
+                android:drawablePadding="5dp"
+                android:hint="@string/full_name"
+                android:inputType="textPersonName|textCapWords"
+                android:padding="10dp" />
 
-    <EditText
-        android:id="@+id/phoneEt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/nameEt"
-        android:hint="@string/phone"
-        android:padding="10dp"
-        android:drawableStart="@drawable/ic_phone_gray"
-        android:drawablePadding="5dp"
-        android:layout_margin="5dp"
-        android:inputType="phone"
-        android:background="@drawable/shape_rect02"/>
+            <EditText
+                android:id="@+id/phoneEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/nameEt"
+                android:layout_margin="5dp"
+                android:background="@drawable/shape_rect02"
+                android:drawableStart="@drawable/ic_phone_gray"
+                android:drawablePadding="5dp"
+                android:hint="@string/phone"
+                android:inputType="phone"
+                android:padding="10dp" />
 
-    <LinearLayout
-        android:id="@+id/addressLl"
-        android:layout_below="@id/phoneEt"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/addressLl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/phoneEt"
+                android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/countryEt"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/country"
-            android:padding="10dp"
-            android:drawableStart="@drawable/ic_location_gray"
-            android:drawablePadding="5dp"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:inputType="phone"
-            android:background="@drawable/shape_rect02"/>
+                <EditText
+                    android:id="@+id/countryEt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_rect02"
+                    android:drawableStart="@drawable/ic_location_gray"
+                    android:drawablePadding="5dp"
+                    android:hint="@string/country"
+                    android:inputType="phone"
+                    android:padding="10dp" />
 
-        <EditText
-            android:id="@+id/stateEt"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/state"
-            android:padding="10dp"
-            android:drawableStart="@drawable/ic_location_gray"
-            android:drawablePadding="5dp"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:inputType="phone"
-            android:background="@drawable/shape_rect02"/>
+                <EditText
+                    android:id="@+id/stateEt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_rect02"
+                    android:drawableStart="@drawable/ic_location_gray"
+                    android:drawablePadding="5dp"
+                    android:hint="@string/state"
+                    android:inputType="phone"
+                    android:padding="10dp" />
 
-        <EditText
-            android:id="@+id/cityEt"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/city"
-            android:padding="10dp"
-            android:drawableStart="@drawable/ic_location_gray"
-            android:drawablePadding="5dp"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:inputType="phone"
-            android:background="@drawable/shape_rect02"/>
-    </LinearLayout>
+                <EditText
+                    android:id="@+id/cityEt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_rect02"
+                    android:drawableStart="@drawable/ic_location_gray"
+                    android:drawablePadding="5dp"
+                    android:hint="@string/city"
+                    android:inputType="phone"
+                    android:padding="10dp" />
+            </LinearLayout>
 
-    <EditText
-        android:id="@+id/addressEt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/addressLl"
-        android:hint="@string/complete_address"
-        android:padding="10dp"
-        android:drawableStart="@drawable/ic_location_gray"
-        android:drawablePadding="5dp"
-        android:layout_margin="5dp"
-        android:inputType="textPostalAddress|textMultiLine"
-        android:background="@drawable/shape_rect02"/>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/EtLayoutAddress"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/addressLl"
+                android:hint="@string/complete_address">
 
-    <EditText
-        android:id="@+id/emailEt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/addressEt"
-        android:hint="@string/email"
-        android:padding="10dp"
-        android:drawableStart="@drawable/ic_mail_gray"
-        android:drawablePadding="5dp"
-        android:layout_margin="5dp"
-        android:inputType="textEmailAddress"
-        android:background="@drawable/shape_rect02"/>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/addressEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/addressLl"
+                    android:layout_margin="5dp"
+                    android:inputType="textPostalAddress|textMultiLine"
+                    android:padding="10dp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/passEt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/emailEt"
-        android:hint="@string/pass"
-        android:padding="10dp"
-        android:drawableStart="@drawable/ic_lock_gray"
-        android:drawablePadding="5dp"
-        android:layout_margin="5dp"
-        android:inputType="textPassword"
-        android:background="@drawable/shape_rect02"/>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/EtLayoutEmail"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/EtLayoutAddress"
+                android:hint="@string/email">
 
-    <EditText
-        android:id="@+id/cPassEt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/passEt"
-        android:hint="@string/confirm_pass"
-        android:padding="10dp"
-        android:drawableStart="@drawable/ic_lock_gray"
-        android:drawablePadding="5dp"
-        android:layout_margin="5dp"
-        android:inputType="textPassword"
-        android:background="@drawable/shape_rect02"/>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/emailEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:inputType="textEmailAddress"
+                    android:padding="10dp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/registerBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/cPassEt"
-        android:layout_centerHorizontal="true"
-        android:minWidth="120dp"
-        android:textAllCaps="false"
-        style="@style/TextAppearance.AppCompat.Widget.Button.Colored"
-        android:text="@string/register"/>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/EtLayoutPass"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/EtLayoutEmail"
+                android:hint="@string/pass"
+                app:passwordToggleEnabled="true">
 
-    <TextView
-        android:id="@+id/registerSellerTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="@string/register_seller"
-        android:layout_below="@id/registerBtn"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"/>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/passEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:inputType="textPassword"
+                    android:padding="10dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/EtLayoutCPass"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/EtLayoutPass"
+                android:hint="@string/confirm_pass"
+                app:passwordToggleEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/cPassEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:inputType="textPassword"
+                    android:padding="10dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/registerBtn"
+                style="@style/TextAppearance.AppCompat.Widget.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/EtLayoutCPass"
+                android:layout_centerHorizontal="true"
+                android:minWidth="120dp"
+                android:text="@string/register"
+                android:textAllCaps="false" />
+
+            <TextView
+                android:id="@+id/registerSellerTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/registerBtn"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="5dp"
+                android:text="@string/register_seller" />
         </RelativeLayout>
     </ScrollView>
 
