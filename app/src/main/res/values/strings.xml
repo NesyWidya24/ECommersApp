@@ -19,4 +19,7 @@
     <string name="register">Register</string>
     <string name="shopName">Shop Name</string>
     <string name="deliveryFee">Delivery Fee</string>
+    <string name="editProfile">Edit Profile</string>
+    <string name="update">Update</string>
+    <string name="shop_open">Shop Open</string>
 </resources>
