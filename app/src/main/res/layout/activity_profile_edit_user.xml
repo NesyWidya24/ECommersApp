@@ -133,7 +133,7 @@
         android:drawableStart="@drawable/ic_location_gray"
         android:drawablePadding="5dp"
         android:hint="@string/complete_address"
-        android:inputType="textPostalAddress"
+        android:inputType="textPostalAddress|textMultiLine"
         android:padding="10dp"/>
 
     <Button

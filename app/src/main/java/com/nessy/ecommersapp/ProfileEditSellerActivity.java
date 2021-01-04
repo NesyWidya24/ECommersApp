@@ -30,8 +30,19 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -97,6 +108,7 @@ public class ProfileEditSellerActivity extends AppCompatActivity implements Loca
         progressDialog.setCanceledOnTouchOutside(false);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        checkUser();
 
         backBtn.setOnClickListener(v -> onBackPressed());
 
@@ -106,7 +118,7 @@ public class ProfileEditSellerActivity extends AppCompatActivity implements Loca
 
         gpsBtn.setOnClickListener(v -> {
             //detect location
-            if (!checkLocationPermission()) {
+            if (checkLocationPermission()) {
                 //already allowed
                 detectLocation();
             } else {
@@ -116,7 +128,175 @@ public class ProfileEditSellerActivity extends AppCompatActivity implements Loca
         });
         updateBtn.setOnClickListener(v -> {
             //update profile
+            inputData();
         });
+    }
+
+    private String name, shopName, phone, deliveryFee, country, state, city, address;
+    private boolean shopOpen;
+
+    private void inputData() {
+        //input data
+        name = nameEt.getText().toString().trim();
+        shopName = shopNameEt.getText().toString().trim();
+        phone = phoneEt.getText().toString().trim();
+        deliveryFee = deliveryFeeEt.getText().toString().trim();
+        country = countryEt.getText().toString().trim();
+        city = cityEt.getText().toString().trim();
+        state = stateEt.getText().toString().trim();
+        address = addressEt.getText().toString().trim();
+        shopOpen = shopOpenSwitch.isChecked();
+
+        updateProfile();
+    }
+
+    private void updateProfile() {
+        progressDialog.setMessage("Updating Profile");
+        progressDialog.show();
+
+        if (img_uri == null) {
+            //update without img
+
+            //setup data to update
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put("name", "" + name);
+            hashMap.put("shopName", "" + shopName);
+            hashMap.put("phone", "" + phone);
+            hashMap.put("deliveryFee", "" + deliveryFee);
+            hashMap.put("country", "" + country);
+            hashMap.put("state", "" + state);
+            hashMap.put("city", "" + city);
+            hashMap.put("address", "" + address);
+            hashMap.put("latitude", "" + latitude);
+            hashMap.put("longitude", "" + longitude);
+            hashMap.put("shopOpen", "" + shopOpen);
+
+            ///save to db
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+            reference.child(firebaseAuth.getUid()).setValue(hashMap)
+                    .addOnSuccessListener(aVoid -> {
+                        progressDialog.dismiss();
+                        Toast.makeText(ProfileEditSellerActivity.this, "Profile updated...", Toast.LENGTH_SHORT).show();
+                    })
+                    .addOnFailureListener(e -> {
+                        progressDialog.dismiss();
+                        Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
+        } else {
+            //update with img
+            //-------update img first--------
+            String filePathAndName = "profile_img/" + "" + firebaseAuth.getUid();
+            //upload img
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference(filePathAndName);
+            storageReference.putFile(img_uri)
+                    .addOnSuccessListener(taskSnapshot -> {
+                        //get url of uploaded img
+                        Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                        while (!uriTask.isSuccessful()) ;
+                        Uri downloadImgUri = uriTask.getResult();
+
+                        if (uriTask.isSuccessful()) {
+
+                            //setup data to save
+                            HashMap<String, Object> hashMap = new HashMap<>();
+                            hashMap.put("name", "" + name);
+                            hashMap.put("shopName", "" + shopName);
+                            hashMap.put("phone", "" + phone);
+                            hashMap.put("deliveryFee", "" + deliveryFee);
+                            hashMap.put("country", "" + country);
+                            hashMap.put("state", "" + state);
+                            hashMap.put("city", "" + city);
+                            hashMap.put("address", "" + address);
+                            hashMap.put("latitude", "" + latitude);
+                            hashMap.put("longitude", "" + longitude);
+                            hashMap.put("shopOpen", "" + shopOpen);
+                            hashMap.put("profileImg", "" + downloadImgUri);//url of uploaded img
+
+                            ///save to db
+                            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+                            reference.child(firebaseAuth.getUid()).setValue(hashMap)
+                                    .addOnSuccessListener(aVoid -> {
+                                        progressDialog.dismiss();
+                                        Toast.makeText(ProfileEditSellerActivity.this, "Profile updated...", Toast.LENGTH_SHORT).show();
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        progressDialog.dismiss();
+                                        Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    });
+
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        progressDialog.dismiss();
+                        Toast.makeText(ProfileEditSellerActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
+        }
+    }
+
+    private void checkUser() {
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        if (firebaseUser == null) {
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+            finish();
+        } else {
+            loadMyInfo();
+        }
+    }
+
+    private void loadMyInfo() {
+        //load user info, and set to views
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+        reference.orderByChild("uid").equalTo(firebaseAuth.getUid())
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            String accountType = "" + dataSnapshot.child("accountType").getValue();
+                            String address = "" + dataSnapshot.child("address").getValue();
+                            String city = "" + dataSnapshot.child("city").getValue();
+                            String state = "" + dataSnapshot.child("state").getValue();
+                            String country = "" + dataSnapshot.child("country").getValue();
+                            String deliveryFee = "" + dataSnapshot.child("deliveryFee").getValue();
+                            String email = "" + dataSnapshot.child("email").getValue();
+                            latitude = Double.parseDouble("" + dataSnapshot.child("latitude").getValue());
+                            longitude = Double.parseDouble("" + dataSnapshot.child("longitude").getValue());
+                            String name = "" + dataSnapshot.child("name").getValue();
+                            String online = "" + dataSnapshot.child("online").getValue();
+                            String phone = "" + dataSnapshot.child("phone").getValue();
+                            String profileImg = "" + dataSnapshot.child("profileImg").getValue();
+                            String timestamp = "" + dataSnapshot.child("timestamp").getValue();
+                            String shopName = "" + dataSnapshot.child("shopName").getValue();
+                            String shopOpen = "" + dataSnapshot.child("shopOpen").getValue();
+                            String uid = "" + dataSnapshot.child("uid").getValue();
+
+                            nameEt.setText(name);
+                            phoneEt.setText(phone);
+                            countryEt.setText(country);
+                            stateEt.setText(state);
+                            cityEt.setText(city);
+                            addressEt.setText(address);
+                            shopNameEt.setText(shopName);
+                            deliveryFeeEt.setText(deliveryFee);
+
+                            if (shopOpen.equals("true")) {
+                                shopOpenSwitch.setChecked(true);
+                            } else {
+                                shopOpenSwitch.setChecked(false);
+                            }
+
+                            try {
+                                Glide.with(getApplicationContext()).load(profileImg).placeholder(R.drawable.ic_store_gray).into(profileIv);
+                            } catch (Exception e) {
+                                profileIv.setImageResource(R.drawable.ic_person_gray);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
     }
 
     private void showImgPickDialog() {
@@ -272,24 +452,24 @@ public class ProfileEditSellerActivity extends AppCompatActivity implements Loca
                     }
                 }
             }
-            case CAMERA_REQUEST_CODE:{
-                if (grantResults.length > 0){
+            case CAMERA_REQUEST_CODE: {
+                if (grantResults.length > 0) {
                     boolean cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
                     boolean storageAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
-                    if (cameraAccepted & storageAccepted){
+                    if (cameraAccepted & storageAccepted) {
                         pickFromCamera();
-                    }else {
-                        Toast.makeText(this,"Camera permissions are necessary..", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(this, "Camera permissions are necessary..", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
-            case STORAGE_REQUEST_CODE:{
-                if (grantResults.length > 0){
+            case STORAGE_REQUEST_CODE: {
+                if (grantResults.length > 0) {
                     boolean storageAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-                    if (storageAccepted){
+                    if (storageAccepted) {
                         pickFromGallery();
-                    }else {
-                        Toast.makeText(this,"Storage permission is necessary..", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(this, "Storage permission is necessary..", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -300,11 +480,11 @@ public class ProfileEditSellerActivity extends AppCompatActivity implements Loca
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         //handle img pick result
-        if (resultCode == RESULT_OK){
-            if (requestCode == IMG_PICK_GALLERY_CODE){
+        if (resultCode == RESULT_OK) {
+            if (requestCode == IMG_PICK_GALLERY_CODE) {
                 img_uri = data.getData();
                 profileIv.setImageURI(img_uri);
-            }else if (requestCode == IMG_PICK_CAMERA_CODE){
+            } else if (requestCode == IMG_PICK_CAMERA_CODE) {
                 profileIv.setImageURI(img_uri);
             }
         }
