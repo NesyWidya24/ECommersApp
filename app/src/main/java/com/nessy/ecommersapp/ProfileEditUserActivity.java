@@ -43,6 +43,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class ProfileEditUserActivity extends AppCompatActivity implements LocationListener {
 
@@ -163,7 +164,7 @@ public class ProfileEditUserActivity extends AppCompatActivity implements Locati
 
             ///save to db
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
-            reference.child(firebaseAuth.getUid()).setValue(hashMap)
+            reference.child(Objects.requireNonNull(firebaseAuth.getUid())).updateChildren(hashMap)
                     .addOnSuccessListener(aVoid -> {
                         progressDialog.dismiss();
                         Toast.makeText(ProfileEditUserActivity.this, "Profile updated...", Toast.LENGTH_SHORT).show();
@@ -201,7 +202,7 @@ public class ProfileEditUserActivity extends AppCompatActivity implements Locati
 
                             ///save to db
                             DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
-                            reference.child(firebaseAuth.getUid()).setValue(hashMap)
+                            reference.child(firebaseAuth.getUid()).updateChildren(hashMap)
                                     .addOnSuccessListener(aVoid -> {
                                         progressDialog.dismiss();
                                         Toast.makeText(ProfileEditUserActivity.this, "Profile updated...", Toast.LENGTH_SHORT).show();

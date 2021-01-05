@@ -173,7 +173,7 @@ public class ProfileEditSellerActivity extends AppCompatActivity implements Loca
 
             ///save to db
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
-            reference.child(firebaseAuth.getUid()).setValue(hashMap)
+            reference.child(firebaseAuth.getUid()).updateChildren(hashMap)
                     .addOnSuccessListener(aVoid -> {
                         progressDialog.dismiss();
                         Toast.makeText(ProfileEditSellerActivity.this, "Profile updated...", Toast.LENGTH_SHORT).show();
@@ -214,7 +214,7 @@ public class ProfileEditSellerActivity extends AppCompatActivity implements Loca
 
                             ///save to db
                             DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
-                            reference.child(firebaseAuth.getUid()).setValue(hashMap)
+                            reference.child(firebaseAuth.getUid()).updateChildren(hashMap)
                                     .addOnSuccessListener(aVoid -> {
                                         progressDialog.dismiss();
                                         Toast.makeText(ProfileEditSellerActivity.this, "Profile updated...", Toast.LENGTH_SHORT).show();
