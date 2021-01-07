@@ -6,10 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -22,8 +25,10 @@ import java.util.HashMap;
 
 public class MainSellerActivity extends AppCompatActivity {
 
-    private TextView nameTv;
-    private ImageButton logoutBtn, editProfileBtn;
+    private TextView nameTv, shopNameTv, emailTv;
+    private ImageButton logoutBtn, editProfileBtn, addProductBtn;
+    private ImageView profileIv;
+
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
 
@@ -33,8 +38,12 @@ public class MainSellerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_seller);
 
         nameTv = findViewById(R.id.nameTv);
+        shopNameTv = findViewById(R.id.shopNameTv);
+        emailTv = findViewById(R.id.emailTv);
         logoutBtn = findViewById(R.id.logoutBtn);
         editProfileBtn = findViewById(R.id.editProfileBtn);
+        addProductBtn = findViewById(R.id.addProductBtn);
+        profileIv = findViewById(R.id.profileIv);
         firebaseAuth = FirebaseAuth.getInstance();
         checkUser();
 
@@ -48,6 +57,11 @@ public class MainSellerActivity extends AppCompatActivity {
         });
         editProfileBtn.setOnClickListener(v -> {
             startActivity(new Intent(MainSellerActivity.this, ProfileEditSellerActivity.class));
+            finish();
+        });
+
+        addProductBtn.setOnClickListener(v -> {
+            startActivity(new Intent(MainSellerActivity.this, AddProductActivity.class));
             finish();
         });
     }
@@ -92,8 +106,19 @@ public class MainSellerActivity extends AppCompatActivity {
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                             String name = "" + dataSnapshot.child("name").getValue();
                             String accountType = "" + dataSnapshot.child("accountType").getValue();
+                            String email = "" + dataSnapshot.child("email").getValue();
+                            String shopName = "" + dataSnapshot.child("shopName").getValue();
+                            String profileImg = "" + dataSnapshot.child("profileImg").getValue();
 
                             nameTv.setText(name);
+                            shopNameTv.setText(shopName);
+                            emailTv.setText(email);
+
+                            try {
+                                Glide.with(getApplicationContext()).load(profileImg).placeholder(R.drawable.ic_store_gray).into(profileIv);
+                            } catch (Exception e) {
+                                profileIv.setImageResource(R.drawable.ic_store_gray);
+                            }
                         }
                     }
 

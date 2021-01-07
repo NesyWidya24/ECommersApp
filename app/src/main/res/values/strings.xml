@@ -22,4 +22,14 @@
     <string name="editProfile">Edit Profile</string>
     <string name="update">Update</string>
     <string name="shop_open">Shop Open</string>
+    <string name="add_product">Add Product</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="category">Category</string>
+    <string name="quantity">Quantity e.g. kg, g etc.</string>
+    <string name="price">Price</string>
+    <string name="discount">Discount</string>
+    <string name="discountPrice">Discount Price</string>
+    <string name="discountNote">Discount Note e.g. 10% Off</string>
+    <string name="back">Back</string>
 </resources>

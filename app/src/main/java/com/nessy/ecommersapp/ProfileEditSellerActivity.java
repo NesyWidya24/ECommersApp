@@ -287,7 +287,7 @@ public class ProfileEditSellerActivity extends AppCompatActivity implements Loca
                             try {
                                 Glide.with(getApplicationContext()).load(profileImg).placeholder(R.drawable.ic_store_gray).into(profileIv);
                             } catch (Exception e) {
-                                profileIv.setImageResource(R.drawable.ic_person_gray);
+                                profileIv.setImageResource(R.drawable.ic_store_gray);
                             }
                         }
                     }
