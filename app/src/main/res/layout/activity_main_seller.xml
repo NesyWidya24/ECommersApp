@@ -8,18 +8,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@drawable/shape_rect01">
-
-        <TextView
-            android:id="@+id/nameTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="@string/full_name"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_rect01"
+        android:padding="10dp">
 
         <ImageButton
             android:id="@+id/editProfileBtn"
@@ -36,6 +27,52 @@
             android:layout_alignParentEnd="true"
             android:background="@null"
             android:src="@drawable/ic_logout_white" />
+
+        <ImageButton
+            android:id="@+id/addProductBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_toStartOf="@id/editProfileBtn"
+            android:background="@null"
+            android:src="@drawable/ic_add_shipping_white" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profileIv"
+            app:civ_circle_background_color="@color/white"
+            app:civ_border_overlay="true"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_store_gray"
+            android:layout_width="70dp"
+            android:layout_height="70dp"/>
+
+        <TextView
+            android:id="@+id/nameTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/full_name"
+            android:textColor="@color/white"
+            android:layout_toEndOf="@id/profileIv"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/shopNameTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_toEndOf="@id/profileIv"
+            android:layout_below="@id/nameTv"
+            android:text="@string/shopName"/>
+
+        <TextView
+            android:id="@+id/emailTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_toEndOf="@id/profileIv"
+            android:layout_below="@id/shopNameTv"
+            android:text="@string/email"/>
+
     </RelativeLayout>
 
 </RelativeLayout>
