@@ -2,7 +2,7 @@ package com.nessy.ecommersapp;
 
 public class Constants {
     //product categories
-    public static final String[] options = {
+    public static final String[] productCategories = {
             "Beverages",
             "Beauty & Personal Care",
             "Baby Kids",
