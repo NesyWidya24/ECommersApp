@@ -111,7 +111,7 @@
                 android:id="@+id/deliveryFeeEt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/shopNameEt"
+                android:layout_below="@+id/phoneEt"
                 android:layout_margin="5dp"
                 android:background="@drawable/shape_rect02"
                 android:drawableStart="@drawable/ic_local_shipping_gray"

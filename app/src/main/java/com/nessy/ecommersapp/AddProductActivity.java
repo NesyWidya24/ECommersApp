@@ -171,7 +171,7 @@ public class AddProductActivity extends AppCompatActivity {
         progressDialog.setMessage("Adding Product...");
         progressDialog.show();
 
-        final String timestamp = "" + System.currentTimeMillis();
+        String timestamp = "" + System.currentTimeMillis();
         if (img_uri == null) {
             //upload without img
             HashMap<String, Object> hashMap = new HashMap<>();
@@ -189,10 +189,10 @@ public class AddProductActivity extends AppCompatActivity {
             hashMap.put("uid", "" + firebaseAuth.getUid());
 
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
-            reference.child(firebaseAuth.getUid()).child("Product").child(timestamp).setValue(hashMap)
+            reference.child(firebaseAuth.getUid()).child("Products").child(timestamp).setValue(hashMap)
                     .addOnSuccessListener(aVoid -> {
                         progressDialog.dismiss();
-                        Toast.makeText(AddProductActivity.this, "Product Added", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddProductActivity.this, "Product Added....", Toast.LENGTH_SHORT).show();
                         clearData();
                     })
                     .addOnFailureListener(e -> {
@@ -219,7 +219,7 @@ public class AddProductActivity extends AppCompatActivity {
                                 hashMap.put("productDesc", "" + productDesc);
                                 hashMap.put("productCategory", "" + productCategory);
                                 hashMap.put("productQuantity", "" + productQuantity);
-                                hashMap.put("productIcon", downloadImgUri);
+                                hashMap.put("productIcon", "" + downloadImgUri);
                                 hashMap.put("originalPrice", "" + originalPrice);
                                 hashMap.put("discountPrice", "" + discountPrice);
                                 hashMap.put("discountNote", "" + discountNote);
@@ -228,7 +228,7 @@ public class AddProductActivity extends AppCompatActivity {
                                 hashMap.put("uid", "" + firebaseAuth.getUid());
 
                                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
-                                reference.child(firebaseAuth.getUid()).child("Product").child(timestamp).setValue(hashMap)
+                                reference.child(firebaseAuth.getUid()).child("Products").child(timestamp).setValue(hashMap)
                                         .addOnSuccessListener(aVoid -> {
                                             progressDialog.dismiss();
                                             Toast.makeText(AddProductActivity.this, "Product Added", Toast.LENGTH_SHORT).show();
