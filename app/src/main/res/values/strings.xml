@@ -32,4 +32,8 @@
     <string name="discountPrice">Discount Price</string>
     <string name="discountNote">Discount Note e.g. 10% Off</string>
     <string name="back">Back</string>
+    <string name="products">Products</string>
+    <string name="orders">Orders</string>
+    <string name="search">Search</string>
+    <string name="showing_all">Showing All</string>
 </resources>
