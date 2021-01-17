@@ -8,9 +8,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -72,6 +75,27 @@ public class MainSellerActivity extends AppCompatActivity {
         loadAllProducts();
         showProductsUI();
 
+        searchProductEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                try {
+                    adapterProductSeller.getFilter().filter(s);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Please wait");
         progressDialog.setCanceledOnTouchOutside(false);
@@ -101,8 +125,48 @@ public class MainSellerActivity extends AppCompatActivity {
         });
         filterProductBtn.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainSellerActivity.this);
-            builder.setTitle("Choose Category:");
+            builder.setTitle("Choose Category:")
+                    .setItems(Constants.productCategories1, (dialog, which) -> {
+                        //get Selected item
+                        String selected = Constants.productCategories1[which];
+                        filteredProductTv.setText(selected);
+                        if (selected.equals("All")){
+                            loadAllProducts();
+                        }else {
+                            loadFilteredProducts(selected);
+                        }
+                    }).show();
         });
+    }
+
+    private void loadFilteredProducts(String selected) {
+        productList = new ArrayList<>();
+        //get all products
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+        reference.child(firebaseAuth.getUid()).child("Products")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        //before getting reset list
+                        productList.clear();
+                        for (DataSnapshot ds: snapshot.getChildren()){
+                            String productCategory = ""+ds.child("productCategory").getValue();
+
+                            //if selected category matches product category then add in list
+                            if (selected.equals(productCategory)){
+                                ModelProduct modelProduct = ds. getValue(ModelProduct.class);
+                                productList.add(modelProduct);
+                            }
+                        }
+                        adapterProductSeller = new AdapterProductSeller(MainSellerActivity.this, productList);
+                        productsRv.setAdapter(adapterProductSeller);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
     }
 
     private void loadAllProducts() {

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 
@@ -77,7 +79,29 @@ public class AdapterProductSeller extends RecyclerView.Adapter<AdapterProductSel
 
         holder.itemView.setOnClickListener(v -> {
             //handle item clicks, show item details
+            detailBottomSheet(modelProduct); //here modelProduct contains details of clicked product
         });
+    }
+
+    private void detailBottomSheet(ModelProduct modelProduct) {
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);
+        //inflate view for bottom sheet
+        View view = LayoutInflater.from(context).inflate(R.layout.bs_product_details_seller, null);
+        //set view to bottom sheet
+        bottomSheetDialog.setContentView(view);
+
+        //init views of bottom sheet
+        ImageButton backBtn = view.findViewById(R.id.backBtn);
+        ImageButton deleteBtn = view.findViewById(R.id.deleteBtn);
+        ImageButton editBtn = view.findViewById(R.id.editBtn);
+        ImageView productIconIv = view.findViewById(R.id.productIconIv);
+        TextView discountNoteTv = view.findViewById(R.id.discountNoteTv);
+        TextView titleTv = view.findViewById(R.id.titleTv);
+        TextView descTv = view.findViewById(R.id.descTv);
+        TextView categoryTv = view.findViewById(R.id.categoryTv);
+        TextView quantityTv = view.findViewById(R.id.quantityTv);
+        TextView discountPriceTv = view.findViewById(R.id.discountPriceTv);
+        TextView originalPriceTv = view.findViewById(R.id.originalPriceTv);
     }
 
     @Override
@@ -101,11 +125,12 @@ public class AdapterProductSeller extends RecyclerView.Adapter<AdapterProductSel
         public HolderProductSeller(@NonNull View itemView) {
             super(itemView);
 
-            productIconIv = itemView.findViewById(R.id.productIconIv);
+            productIconIv = itemView.findViewById(R.id.productsIconIv);
             titleTv = itemView.findViewById(R.id.titleTv);
             quantityTv = itemView.findViewById(R.id.quantityTv);
             discountedPriceTv = itemView.findViewById(R.id.discountedPriceTv);
             originalPriceTv = itemView.findViewById(R.id.originalPriceTv);
+            discountNoteTv = itemView.findViewById(R.id.discountNoteTv);
         }
     }
 }

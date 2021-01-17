@@ -39,7 +39,7 @@ public class FilterProduct extends Filter {
             results.count = filterList.size();
             results.values = filterList;
         }
-        return null;
+        return results;
     }
 
     @Override
