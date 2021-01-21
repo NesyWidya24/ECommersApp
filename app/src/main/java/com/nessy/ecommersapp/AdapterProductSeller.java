@@ -1,6 +1,9 @@
 package com.nessy.ecommersapp;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,12 +13,18 @@ import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -102,6 +111,89 @@ public class AdapterProductSeller extends RecyclerView.Adapter<AdapterProductSel
         TextView quantityTv = view.findViewById(R.id.quantityTv);
         TextView discountPriceTv = view.findViewById(R.id.discountPriceTv);
         TextView originalPriceTv = view.findViewById(R.id.originalPriceTv);
+
+        //get data
+        String id = modelProduct.getProductId();
+        String uid = modelProduct.getUid();
+        String discountAvailable = modelProduct.getDiscountAvailable();
+        String discountNote = modelProduct.getDiscountNote();
+        String discountPrice = modelProduct.getDiscountPrice();
+        String productCategory = modelProduct.getProductCategory();
+        String productDesc = modelProduct.getProductDesc();
+        String icon = modelProduct.getProductIcon();
+        String quantity = modelProduct.getProductQuantity();
+        String title = modelProduct.getProductTitle();
+        String timestamp = modelProduct.getTimestamp();
+        String originalPrice = modelProduct.getOriginalPrice();
+
+        //set data
+        titleTv.setText(title);
+        descTv.setText(productDesc);
+        categoryTv.setText(productCategory);
+        quantityTv.setText(quantity);
+        discountNoteTv.setText(discountNote);
+        discountPriceTv.setText("$" + discountPrice);
+        originalPriceTv.setText("$" + originalPrice);
+        if (discountAvailable.equals("true")) {
+            discountPriceTv.setVisibility(View.VISIBLE);
+            discountNoteTv.setVisibility(View.VISIBLE);
+            originalPriceTv.setPaintFlags(originalPriceTv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG); //add strike through on original price
+        } else {
+            discountPriceTv.setVisibility(View.GONE);
+            discountNoteTv.setVisibility(View.GONE);
+        }
+
+        try {
+            Glide.with(context).load(icon)
+                    .placeholder(R.drawable.ic_add_shopping_primary)
+                    .into(productIconIv);
+        } catch (Exception e) {
+            Glide.with(context).load(R.drawable.ic_add_shopping_primary)
+                    .into(productIconIv);
+        }
+
+        //show dialog
+        bottomSheetDialog.show();
+
+        //edit click
+        editBtn.setOnClickListener(v -> {
+            //open edit product activity
+            Intent intent = new Intent(context, EditProductActivity.class);
+            intent.putExtra("productId", id);
+            context.startActivity(intent);
+        });
+
+        deleteBtn.setOnClickListener(v -> {
+            //show delete confirm dialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle("Delete")
+                    .setMessage("Are you sure want to delete product " + title + " ?")
+                    .setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            deleteProduct(id);
+                        }
+                    })
+                    .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    }).show();
+        });
+        backBtn.setOnClickListener(v -> {
+            bottomSheetDialog.dismiss();
+        });
+    }
+
+    private void deleteProduct(String id) {
+        //delete product using id
+
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+        reference.child(firebaseAuth.getUid()).child("Products").child(id).removeValue()
+                .addOnSuccessListener(aVoid -> Toast.makeText(context, "Product deleted...", Toast.LENGTH_SHORT).show())
+                .addOnFailureListener(e -> Toast.makeText(context, "" + e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 
     @Override
@@ -111,7 +203,7 @@ public class AdapterProductSeller extends RecyclerView.Adapter<AdapterProductSel
 
     @Override
     public Filter getFilter() {
-        if (filter==null){
+        if (filter == null) {
             filter = new FilterProduct(this, filterList);
         }
         return filter;
