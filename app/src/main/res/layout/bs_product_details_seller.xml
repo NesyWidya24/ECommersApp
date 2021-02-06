@@ -46,7 +46,7 @@
     </RelativeLayout>
 
     <ImageView
-        android:id="@+id/productIconTv"
+        android:id="@+id/productIconIv"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_centerHorizontal="true"
@@ -59,7 +59,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/productIconTv"
+        android:layout_below="@id/productIconIv"
         android:layout_marginTop="10dp"
         android:orientation="vertical"
         android:padding="10dp">

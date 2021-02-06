@@ -158,6 +158,7 @@ public class AdapterProductSeller extends RecyclerView.Adapter<AdapterProductSel
         //edit click
         editBtn.setOnClickListener(v -> {
             //open edit product activity
+            bottomSheetDialog.dismiss();
             Intent intent = new Intent(context, EditProductActivity.class);
             intent.putExtra("productId", id);
             context.startActivity(intent);
@@ -165,6 +166,7 @@ public class AdapterProductSeller extends RecyclerView.Adapter<AdapterProductSel
 
         deleteBtn.setOnClickListener(v -> {
             //show delete confirm dialog
+            bottomSheetDialog.dismiss();
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setTitle("Delete")
                     .setMessage("Are you sure want to delete product " + title + " ?")
