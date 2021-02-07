@@ -1,4 +1,4 @@
-package com.nessy.ecommersapp;
+package com.nessy.ecommersapp.activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,6 +37,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.nessy.ecommersapp.R;
 
 import java.util.HashMap;
 import java.util.List;

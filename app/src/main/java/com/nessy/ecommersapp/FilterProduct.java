@@ -2,6 +2,9 @@ package com.nessy.ecommersapp;
 
 import android.widget.Filter;
 
+import com.nessy.ecommersapp.adapters.AdapterProductSeller;
+import com.nessy.ecommersapp.models.ModelProduct;
+
 import java.util.ArrayList;
 
 public class FilterProduct extends Filter {

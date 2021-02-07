@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainSellerActivity">
+    tools:context=".activities.MainSellerActivity">
 
+<!--    toolbar-->
     <RelativeLayout
         android:id="@+id/toolbarRl"
         android:layout_width="match_parent"
@@ -105,6 +106,7 @@
 
     </RelativeLayout>
 
+<!--    products-->
     <RelativeLayout
         android:id="@+id/productsRl"
         android:layout_width="match_parent"

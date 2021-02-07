@@ -1,4 +1,4 @@
-package com.nessy.ecommersapp;
+package com.nessy.ecommersapp.models;
 
 public class ModelProduct {
     private String productId,

@@ -1,4 +1,4 @@
-package com.nessy.ecommersapp;
+package com.nessy.ecommersapp.adapters;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -19,12 +19,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.nessy.ecommersapp.FilterProduct;
+import com.nessy.ecommersapp.R;
+import com.nessy.ecommersapp.activities.EditProductActivity;
+import com.nessy.ecommersapp.models.ModelProduct;
 
 import java.util.ArrayList;
 

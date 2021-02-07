@@ -37,4 +37,6 @@
     <string name="search">Search</string>
     <string name="showing_all">Showing All</string>
     <string name="product_details">Product Details</string>
+    <string name="shops">Shops</string>
+    <string name="closed">Closed</string>
 </resources>
