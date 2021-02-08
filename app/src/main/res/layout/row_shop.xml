@@ -46,6 +46,38 @@
             android:layout_toEndOf="@id/shopIv"
             android:layout_toStartOf="@id/nextIv">
 
+            <TextView
+                android:id="@+id/shopNameTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:minLines="1"
+                android:text="@string/shopName"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/phoneTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/phone"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/addressTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/address"
+                android:textColor="@color/black"/>
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                style="@style/Widget.AppCompat.RatingBar.Small"
+                android:numStars="5"
+                android:rating="3.5"/>
 
         </LinearLayout>
 
